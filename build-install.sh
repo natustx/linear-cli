@@ -5,6 +5,8 @@ set -euo pipefail
 
 cd "$(dirname "$0")"
 
+BIN_DIR="$HOME/prj/util/bin"
+
 echo "==> Installing linear-cli..."
 
 # Check for deno
@@ -17,8 +19,12 @@ fi
 # Run the project's install task (includes codegen)
 deno task install
 
+# Symlink executable to ~/prj/util/bin
+mkdir -p "$BIN_DIR"
+ln -sf ~/.deno/bin/linear "$BIN_DIR/linear"
+
 echo ""
 echo "==> linear-cli installed successfully!"
-echo "    Binary: $(which linear 2>/dev/null || echo 'Check your PATH includes ~/.deno/bin')"
+echo "    Binary: $BIN_DIR/linear"
 echo ""
 echo "Setup: Run 'linear config' in your project directory to configure."
